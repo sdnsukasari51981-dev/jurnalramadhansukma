@@ -339,7 +339,7 @@
      <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">✍️</span> Tanda Tangan Orang Tua/Wali</h3>
      <p class="text-gray-600 mb-3 text-sm font-medium">Orang tua/wali menandatangani sebagai bukti mengetahui dan mendukung ibadah anak</p>
      <div class="signature-pad rounded-xl p-4 relative">
-      <canvas id="signature-canvas" class="w-full h-32 rounded-lg bg-white cursor-crosshair border-2 border-gray-300"></canvas><button onclick="clearSignature()" class="absolute top-3 right-3 bg-red-100 hover:bg-red-200 text-red-600 px-3 py-1 rounded-lg text-sm font-semibold transition-colors"> 🗑️ Hapus </button>
+      <canvas id="signature-pad" class="w-full h-32 rounded-lg bg-white cursor-crosshair border-2 border-gray-300"></canvas><button onclick="clearSignature()" class="absolute top-3 right-3 bg-red-100 hover:bg-red-200 text-red-600 px-3 py-1 rounded-lg text-sm font-semibold transition-colors"> 🗑️ Hapus </button>
      </div>
     </section>
     <!-- Catatan Penting -->
@@ -350,7 +350,11 @@
        Kejujuran adalah bagian penting dari iman. Jangan pernah berbohong dalam pengisian jurnal ini. <br><strong>✨ Semoga amal ibadahmu diterima oleh Allah SWT ✨</strong></p>
     </section>
     <!-- Submit Button -->
-    <div class="text-center mt-6"><button id="btn-simpan" onclick="simpanJurnal()" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-4 px-12 rounded-2xl text-lg shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"> 💾 Simpan Jurnal Hari Ini </button>
+    <div class="text-center mt-6">
+      <button id="btn-simpan" onclick="simpanJurnal()"
+  class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-4 px-12 rounded-2xl text-lg shadow-lg transform hover:scale-105 transition-all">
+  💾 Simpan Jurnal Hari Ini
+</button>
      <p id="save-status" class="mt-3 text-white font-semibold text-base"></p>
     </div>
     <!-- Menu Download Excel -->
@@ -392,319 +396,14 @@
    </footer>
   </div>
   <script>
-    const STORAGE_KEY = "riwayatJurnalRamadhan";
-    const defaultConfig = {
-      school_name: 'SDN Sukasari 5',
-      journal_title: 'Jurnal Ramadhan 1447 H',
-      motivation_text: '✨ Semangat Ibadah Ramadhan! ✨'
-    };
+  const STORAGE_KEY = "riwayatJurnalRamadhan";
 
-    let currentData = [];
-    let signatureData = '';
-    let canvas, ctx, isDrawing = false;
-
-    function setupSignature() {
-      canvas = document.getElementById('signature-canvas');
-      if (!canvas) return;
-      ctx = canvas.getContext('2d');
-      
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width - 32;
-      canvas.height = 128;
-      
-      ctx.strokeStyle = '#1565c0';
-      ctx.lineWidth = 2.5;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-
-      canvas.addEventListener('mousedown', startDrawing);
-      canvas.addEventListener('mousemove', draw);
-      canvas.addEventListener('mouseup', stopDrawing);
-      canvas.addEventListener('mouseout', stopDrawing);
-      
-      canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
-      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
-      canvas.addEventListener('touchend', stopDrawing);
-    }
-
-    function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-      };
-    }
-
-    function startDrawing(e) {
-      isDrawing = true;
-      const pos = getPos(e);
-      ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-    }
-
-    function draw(e) {
-      if (!isDrawing) return;
-      const pos = getPos(e);
-      ctx.lineTo(pos.x, pos.y);
-      ctx.stroke();
-    }
-
-    function stopDrawing() {
-      if (isDrawing) {
-        isDrawing = false;
-        signatureData = canvas.toDataURL();
-      }
-    }
-
-    function clearSignature() {
-      if (ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        signatureData = '';
-      }
-    }
-
-    function showCelebration() {
-      const modal = document.getElementById('celebration-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closeCelebration() {
-      const modal = document.getElementById('celebration-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function updateTableCheckboxes() {
-      document.getElementById('table-subuh').checked = document.getElementById('check-subuh').checked;
-      document.getElementById('table-duha').checked = document.getElementById('check-duha').checked;
-      document.getElementById('table-dzuhur').checked = document.getElementById('check-dzuhur').checked;
-      document.getElementById('table-ashar').checked = document.getElementById('check-ashar').checked;
-      document.getElementById('table-maghrib').checked = document.getElementById('check-maghrib').checked;
-      document.getElementById('table-isya').checked = document.getElementById('check-isya').checked;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('check-subuh').addEventListener('change', updateTableCheckboxes);
-      document.getElementById('check-duha').addEventListener('change', updateTableCheckboxes);
-      document.getElementById('check-dzuhur').addEventListener('change', updateTableCheckboxes);
-      document.getElementById('check-ashar').addEventListener('change', updateTableCheckboxes);
-      document.getElementById('check-maghrib').addEventListener('change', updateTableCheckboxes);
-      document.getElementById('check-isya').addEventListener('change', updateTableCheckboxes);
-    });
-
-    async function simpanJurnal() {
-      const nama = document.getElementById('nama-siswa').value.trim();
-      const kelas = document.getElementById('kelas-siswa').value;
-      const tanggal = document.getElementById('tanggal-ibadah').value;
-
-      if (!nama || !kelas || !tanggal) {
-        document.getElementById('save-status').textContent = '⚠️ Mohon lengkapi nama, kelas, dan tanggal!';
-        return;
-      }
-
-      const btn = document.getElementById('btn-simpan');
-      btn.disabled = true;
-      btn.innerHTML = '⏳ Menyimpan...';
-
-      if (currentData.length >= 999) {
-        document.getElementById('save-status').textContent = '⚠️ Batas penyimpanan tercapai (999 data).';
-        btn.disabled = false;
-        btn.innerHTML = '💾 Simpan Jurnal Hari Ini';
-        return;
-      }
-
-      const journalData = {
-        date: tanggal,
-        nama_siswa: nama,
-        kelas: kelas,
-        sahur: document.getElementById('check-sahur').checked,
-        subuh: document.getElementById('check-subuh').checked,
-        duha: document.getElementById('check-duha').checked,
-        dzuhur: document.getElementById('check-dzuhur').checked,
-        ashar: document.getElementById('check-ashar').checked,
-        maghrib: document.getElementById('check-maghrib').checked,
-        isya: document.getElementById('check-isya').checked,
-        tarawih: document.getElementById('check-tarawih').checked,
-        tadarus_surat: document.getElementById('tadarus-surat').value,
-        catatan_harian: document.getElementById('catatan-harian').value,
-        tanda_tangan: signatureData,
-        created_at: new Date().toISOString()
-      };
-
-      if (window.dataSdk) {
-        const result = await window.dataSdk.create(journalData);
-        if (result.isOk) {
-          showCelebration();
-          resetForm();
-          document.getElementById('save-status').textContent = '✅ Jurnal berhasil disimpan!';
-        } else {
-          document.getElementById('save-status').textContent = '❌ Gagal menyimpan. Coba lagi!';
-        }
-      }
-
-      btn.disabled = false;
-      btn.innerHTML = '💾 Simpan Jurnal Hari Ini';
-    }
-
-    function resetForm() {
-      document.getElementById('check-sahur').checked = false;
-      document.getElementById('check-subuh').checked = false;
-      document.getElementById('check-duha').checked = false;
-      document.getElementById('check-dzuhur').checked = false;
-      document.getElementById('check-ashar').checked = false;
-      document.getElementById('check-maghrib').checked = false;
-      document.getElementById('check-isya').checked = false;
-      document.getElementById('check-tarawih').checked = false;
-      document.getElementById('tadarus-surat').value = '';
-      document.getElementById('catatan-harian').value = '';
-      clearSignature();
-      updateTableCheckboxes();
-    }
-
-    async function deleteEntry(backendId) {
-      const entry = currentData.find(d => d.__backendId === backendId);
-      if (!entry) return;
-
-      const btn = document.querySelector(`[data-delete-id="${backendId}"]`);
-      if (btn.dataset.confirming === 'true') {
-        btn.disabled = true;
-        btn.textContent = '⏳';
-        
-        if (window.dataSdk) {
-          const result = await window.dataSdk.delete(entry);
-          if (!result.isOk) {
-            btn.disabled = false;
-            btn.textContent = '🗑️';
-          }
-        }
-      } else {
-        btn.dataset.confirming = 'true';
-        btn.textContent = '✓ Yakin?';
-        btn.classList.add('bg-red-500', 'text-white');
-        
-        setTimeout(() => {
-          if (btn.dataset.confirming === 'true') {
-            btn.dataset.confirming = 'false';
-            btn.textContent = '🗑️';
-            btn.classList.remove('bg-red-500', 'text-white');
-          }
-        }, 3000);
-      }
-    }
-
-    function renderRiwayat(data) {
-      const container = document.getElementById('riwayat-container');
-      
-      if (!data || data.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal tersimpan</p>';
-        return;
-      }
-
-      const sortedData = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-      container.innerHTML = sortedData.map(entry => {
-        const prayers = [];
-        if (entry.sahur) prayers.push('🍚');
-        if (entry.subuh) prayers.push('🌅');
-        if (entry.duha) prayers.push('☀️');
-        if (entry.dzuhur) prayers.push('🌞');
-        if (entry.ashar) prayers.push('🌤️');
-        if (entry.maghrib) prayers.push('🌅');
-        if (entry.isya) prayers.push('🌙');
-        if (entry.tarawih) prayers.push('🕌');
-
-        const dateObj = new Date(entry.date);
-        const formattedDate = dateObj.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-        return `
-          <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border-2 border-blue-300 shadow-md">
-            <div class="flex justify-between items-start mb-3">
-              <div class="flex-1">
-                <p class="font-bold text-blue-900 text-base">${entry.nama_siswa} - Kelas ${entry.kelas}</p>
-                <p class="text-sm text-gray-600 font-medium">${formattedDate}</p>
-              </div>
-              <button data-delete-id="${entry.__backendId}" onclick="deleteEntry('${entry.__backendId}')" class="px-3 py-1 rounded-lg bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600 transition-colors text-sm font-semibold">
-                🗑️
-              </button>
-            </div>
-            <div class="flex flex-wrap gap-1 mb-2">
-              ${prayers.map(p => `<span class="text-xl">${p}</span>`).join('')}
-              ${prayers.length === 0 ? '<span class="text-gray-400 text-sm font-medium">Belum ada ibadah tercatat</span>' : ''}
-            </div>
-            ${entry.tadarus_surat ? `<p class="text-sm text-blue-700 font-medium">📖 Tadarus: <strong>${entry.tadarus_surat}</strong></p>` : ''}
-            ${entry.catatan_harian ? `<p class="text-sm text-blue-700 mt-1">📝 Catatan: ${entry.catatan_harian.substring(0, 50)}...</p>` : ''}
-            ${entry.tanda_tangan ? '<p class="text-sm text-green-600 mt-1 font-semibold">✅ Ditandatangani orang tua</p>' : '<p class="text-sm text-red-600 mt-1">❌ Belum ditandatangani</p>'}
-          </div>
-        `;
-      }).join('');
-    }
-
-    const dataHandler = {
-      onDataChanged(data) {
-        currentData = data;
-        renderRiwayat(data);
-      }
-    };
-
-    async function onConfigChange(config) {
-      document.getElementById('school-name').textContent = config.school_name || defaultConfig.school_name;
-      document.getElementById('journal-title').textContent = config.journal_title || defaultConfig.journal_title;
-      document.getElementById('motivation-text').textContent = config.motivation_text || defaultConfig.motivation_text;
-    }
-
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      };
-    }
-
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ['school_name', config.school_name || defaultConfig.school_name],
-        ['journal_title', config.journal_title || defaultConfig.journal_title],
-        ['motivation_text', config.motivation_text || defaultConfig.motivation_text]
-      ]);
-    }
-
-    async function init() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('tanggal-ibadah').value = today;
-
-      setupSignature();
-
-      if (window.elementSdk) {
-        window.elementSdk.init({
-          defaultConfig,
-          onConfigChange,
-          mapToCapabilities,
-          mapToEditPanelValues
-        });
-      }
-
-      if (window.dataSdk) {
-        const result = await window.dataSdk.init(dataHandler);
-        if (!result.isOk) {
-          console.error('Failed to initialize Data SDK');
-        }
-      }
-    }
-
-    init();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cff13819056aa09',t:'MTc3MTQzMzk3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
- </script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script>
-  
+  function getChecked(id) {
+    return document.getElementById(id)?.checked || false;
+  }
 
   function getRiwayat() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   }
 
   function setRiwayat(data) {
@@ -712,42 +411,40 @@
   }
 
   function simpanJurnal() {
-  const data = {
-    nama: document.getElementById("nama").value,
-    kelas: document.getElementById("kelas").value,
-    tanggal: document.getElementById("tanggal").value,
-    ibadah: [...document.querySelectorAll('input[name="ibadah"]:checked')].map(el => el.value),
-    tadarus: document.getElementById("tadarus").value,
-    catatan: document.getElementById("catatan").value,
-    timestamp: Date.now()
-  };
+    const nama = document.getElementById('nama-siswa')?.value?.trim();
+    const kelas = document.getElementById('kelas-siswa')?.value;
+    const tanggal = document.getElementById('tanggal-ibadah')?.value;
+    const catatan = document.getElementById('catatan-harian').value.trim(); // ⬅️ ambil catatan
+    const tandaTangan = window.getSignatureData ? getSignatureData() : "";
 
-  database.ref("jurnal").push(data);
-  alert("Jurnal berhasil disimpan!");
+    if (!nama || !kelas || !tanggal) {
+      document.getElementById('save-status').textContent = '⚠️ Mohon lengkapi Nama, Kelas, dan Tanggal!';
+      return;
+    }
 
-    const journalData = {
+    const dataBaru = {
       Tanggal: tanggal,
-      Nama: nama,
-      Kelas: kelas,
-      Sahur: document.getElementById('check-sahur').checked ? 'Ya' : 'Tidak',
-      Subuh: document.getElementById('check-subuh').checked ? 'Ya' : 'Tidak',
-      Dhuha: document.getElementById('check-duha').checked ? 'Ya' : 'Tidak',
-      Dzuhur: document.getElementById('check-dzuhur').checked ? 'Ya' : 'Tidak',
-      Ashar: document.getElementById('check-ashar').checked ? 'Ya' : 'Tidak',
-      Maghrib: document.getElementById('check-maghrib').checked ? 'Ya' : 'Tidak',
-      Isya: document.getElementById('check-isya').checked ? 'Ya' : 'Tidak',
-      Tarawih: document.getElementById('check-tarawih').checked ? 'Ya' : 'Tidak',
-      Tadarus: document.getElementById('tadarus-surat').value || '-',
-      Catatan: document.getElementById('catatan-harian').value || '-'
-    };
+  Nama: nama,
+  Kelas: kelas,
+  Sahur: getChecked('check-sahur') ? 'Ya' : 'Tidak',
+  Subuh: getChecked('check-subuh') ? 'Ya' : 'Tidak',
+  Duha: getChecked('check-duha') ? 'Ya' : 'Tidak',
+  Dzuhur: getChecked('check-dzuhur') ? 'Ya' : 'Tidak',
+  Ashar: getChecked('check-ashar') ? 'Ya' : 'Tidak',
+  Maghrib: getChecked('check-maghrib') ? 'Ya' : 'Tidak',
+  Isya: getChecked('check-isya') ? 'Ya' : 'Tidak',
+  Tarawih: getChecked('check-tarawih') ? 'Ya' : 'Tidak',
+  Tadarus: document.getElementById('tadarus-surat')?.value || '-',
+  Catatan: document.getElementById('catatan-harian')?.value || '-',
+  Signature: getSignatureData(),   // ⬅️ INI PENTING
+  WaktuSimpan: new Date().toISOString()}
 
     const riwayat = getRiwayat();
 
-    // Cegah dobel tanggal + nama + kelas
-    const isExist = riwayat.some(r => 
-      r.Tanggal === journalData.Tanggal &&
-      r.Nama === journalData.Nama &&
-      r.Kelas === journalData.Kelas
+    const isExist = riwayat.some(r =>
+      r.Tanggal === dataBaru.Tanggal &&
+      r.Nama === dataBaru.Nama &&
+      r.Kelas === dataBaru.Kelas
     );
 
     if (isExist) {
@@ -755,68 +452,44 @@
       return;
     }
 
-    riwayat.push(journalData);
+    riwayat.push(dataBaru);
     setRiwayat(riwayat);
 
-    tampilkanRiwayat();
     document.getElementById('save-status').textContent = '✅ Jurnal berhasil disimpan!';
-
-    showCelebration();
-
-    document.getElementById('save-status').textContent = '✅ Jurnal berhasil disimpan & file Excel bisa diunduh!';
+    renderRiwayat();
+    showCelebration?.();
   }
 
-  function tampilkanRiwayat() {
+  function renderRiwayat() {
   const container = document.getElementById("riwayat-container");
+  const data = getRiwayat();
 
-  database.ref("jurnal").on("value", (snapshot) => {
-    const data = snapshot.val();
-    container.innerHTML = "";
+  if (!data.length) {
+    container.innerHTML = `<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal tersimpan</p>`;
+    return;
+  }
 
-    if (!data) {
-      container.innerHTML = `<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal</p>`;
-      return;
-    }
+  container.innerHTML = data.reverse().map(item => `
+    <div class="p-4 rounded-xl bg-white shadow border-l-4 border-blue-500">
+      <p class="font-bold text-blue-700">📅 ${item.Tanggal}</p>
+      <p class="text-sm text-gray-700">
+        👤 ${item.Nama} (${item.Kelas})<br>
+        🕌 Subuh: ${item.Subuh}, Dzuhur: ${item.Dzuhur}, Ashar: ${item.Ashar}, Maghrib: ${item.Maghrib}, Isya: ${item.Isya}<br>
+        📖 Tadarus: ${item.Tadarus}<br>
+        📝 Catatan Harian: ${item.Catatan}
+      </p>
 
-    Object.values(data).reverse().forEach((item, i) => {
-      container.innerHTML += `
-        <div class="p-4 rounded-xl border border-blue-200 bg-blue-50">
-          <div class="font-bold text-blue-800">${item.nama} (${item.kelas})</div>
-          <div class="text-sm text-gray-600">📅 ${item.tanggal}</div>
-          <div class="text-sm">✅ ${item.ibadah?.join(", ") || "-"}</div>
-          <div class="text-sm">📖 Tadarus: ${item.tadarus || "-"}</div>
-          <div class="text-sm">📝 Catatan: ${item.catatan || "-"}</div>
+      ${item.Signature ? `
+        <div class="mt-2">
+          <p class="text-xs text-gray-500">✍️ Tanda Tangan Orang Tua:</p>
+          <img src="${item.Signature}" alt="Tanda tangan orang tua" class="h-20 border rounded-lg bg-white">
         </div>
-      `;
-    });
-  });
+      ` : `<p class="text-xs text-red-500 mt-2">⚠️ Belum ada tanda tangan</p>`}
+    </div>
+  `).join('');
+}
 
-tampilkanRiwayat();
-
-
-    container.innerHTML = riwayat.map((item, i) => `
-      <div class="p-4 rounded-xl bg-white shadow border-l-4 border-blue-500">
-        <p class="font-bold text-blue-700">📅 ${item.Tanggal}</p>
-        <p class="text-sm text-gray-700">
-          👤 ${item.Nama} (${item.Kelas})<br>
-          🕌 Subuh: ${item.Subuh}, Dzuhur: ${item.Dzuhur}, Ashar: ${item.Ashar}, Maghrib: ${item.Maghrib}, Isya: ${item.Isya}<br>
-          📖 Tadarus: ${item.Tadarus}
-        </p>
-      </div>
-    `).join('');
-  }
-
-  function downloadExcel(data) {
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Jurnal Ramadhan");
-
-    XLSX.writeFile(wb, "Jurnal_Ramadhan_SDN_Sukasari_5.xlsx");
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    tampilkanRiwayat();
-  });
+  document.addEventListener('DOMContentLoaded', renderRiwayat);
 </script>
 <script>
   function downloadExcelRiwayat() {
@@ -832,25 +505,88 @@ tampilkanRiwayat();
     XLSX.utils.book_append_sheet(wb, ws, "Jurnal Ramadhan");
 
     XLSX.writeFile(wb, "Jurnal_Ramadhan_SDN_Sukasari_5.xlsx");
-  }
+      }
+      TandaTangan: d.Signature ? "Ada" : "Tidak Ada"
 </script>
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
 
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
-  const firebaseConfig = {
-  apiKey: "AIzaSyAeCJafJYijKKG2My__FoBiSWjMwhtA-hs",
-  authDomain: "jurnal-ramadhan-1447-h-sukma.firebaseapp.com",
-  databaseURL: "https://jurnal-ramadhan-1447-h-sukma-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "jurnal-ramadhan-1447-h-sukma",
-  storageBucket: "jurnal-ramadhan-1447-h-sukma.firebasestorage.app",
-  messagingSenderId: "576108268955",
-  appId: "1:576108268955:web:abd16a8a799dac56e4653e",
+document.addEventListener("DOMContentLoaded", function () {
+
+  const canvas = document.getElementById("signature-pad");
+  const ctx = canvas.getContext("2d");
+
+  let isDrawing = false;
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    const ratio = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#111827";
+  }
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  function getPosition(e) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  }
+
+  canvas.addEventListener("mousedown", function (e) {
+    isDrawing = true;
+    const pos = getPosition(e);
+    ctx.beginPath();
+    ctx.moveTo(pos.x, pos.y);
+  });
+
+  canvas.addEventListener("mousemove", function (e) {
+    if (!isDrawing) return;
+    const pos = getPosition(e);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+  });
+
+  canvas.addEventListener("mouseup", function () {
+    isDrawing = false;
+    ctx.beginPath();
+  });
+
+  canvas.addEventListener("mouseleave", function () {
+    isDrawing = false;
+    ctx.beginPath();
+  });
+
+  window.clearSignature = function () {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
+  window.getSignatureData = function () {
+    return canvas.toDataURL("image/png");
+  };
+  
+});
+function showCelebration() {
+      const modal = document.getElementById('celebration-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCelebration() {
+      const modal = document.getElementById('celebration-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }    
 </script>
 
 
