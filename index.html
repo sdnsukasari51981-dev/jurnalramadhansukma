@@ -132,10 +132,8 @@
     .header-shadow {
       box-shadow: 0 8px 32px rgba(0, 102, 204, 0.3);
     }
-    #signature-pad {
-    touch-action: none;          /* Matikan gesture scroll di canvas */
-    -ms-touch-action: none;     /* Support lama */
-    user-select: none;          /* Cegah seleksi teks */
+    #signature-canvas {
+    touch-action: none; /* penting agar tidak ke-scroll saat tanda tangan */
   }
   </style>
   <style>body { box-sizing: border-box; }</style>
@@ -536,9 +534,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.strokeStyle = "#111827";
   }
 
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
   function getPosFromMouse(e) {
     const rect = canvas.getBoundingClientRect();
     return { x: e.clientX - rect.left, y: e.clientY - rect.top };
@@ -570,26 +565,24 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.beginPath();
   });
 
-  // Touch start
-  canvas.addEventListener("touchstart", function (e) {
-    e.preventDefault();               // ⛔ cegah scroll
+  // Touch events (HP/Tablet)
+  canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // cegah scroll layar
     isDrawing = true;
-    const pos = getTouchPos(e);
+    const p = getPosFromTouch(e);
     ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
+    ctx.moveTo(p.x, p.y);
   }, { passive: false });
 
-  // Touch move
-  canvas.addEventListener("touchmove", function (e) {
-    e.preventDefault();               // ⛔ cegah scroll
+  canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
     if (!isDrawing) return;
-    const pos = getTouchPos(e);
-    ctx.lineTo(pos.x, pos.y);
+    const p = getPosFromTouch(e);
+    ctx.lineTo(p.x, p.y);
     ctx.stroke();
   }, { passive: false });
 
-  // Touch end
-  canvas.addEventListener("touchend", function () {
+  canvas.addEventListener("touchend", () => {
     isDrawing = false;
     ctx.beginPath();
   });
