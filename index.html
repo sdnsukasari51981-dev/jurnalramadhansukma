@@ -516,8 +516,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
-  const canvas = document.getElementById("signature-pad");
+  const canvas = document.getElementById("signature-canvas");
   const ctx = canvas.getContext("2d");
 
   let isDrawing = false;
@@ -538,38 +537,38 @@ document.addEventListener("DOMContentLoaded", function () {
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  function getPosition(e) {
+  function getPosFromMouse(e) {
     const rect = canvas.getBoundingClientRect();
-    return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    };
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
   }
 
-  canvas.addEventListener("mousedown", function (e) {
+  function getPosFromTouch(e) {
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0] || e.changedTouches[0];
+    return { x: t.clientX - rect.left, y: t.clientY - rect.top };
+  }
+
+  // Mouse events (PC/Laptop)
+  canvas.addEventListener("mousedown", (e) => {
     isDrawing = true;
-    const pos = getPosition(e);
+    const p = getPosFromMouse(e);
     ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
+    ctx.moveTo(p.x, p.y);
   });
 
-  canvas.addEventListener("mousemove", function (e) {
+  canvas.addEventListener("mousemove", (e) => {
     if (!isDrawing) return;
-    const pos = getPosition(e);
-    ctx.lineTo(pos.x, pos.y);
+    const p = getPosFromMouse(e);
+    ctx.lineTo(p.x, p.y);
     ctx.stroke();
   });
 
-  canvas.addEventListener("mouseup", function () {
+  window.addEventListener("mouseup", () => {
     isDrawing = false;
     ctx.beginPath();
   });
 
-  canvas.addEventListener("mouseleave", function () {
-    isDrawing = false;
-    ctx.beginPath();
-  });
-
+  // Touch events (HP/Tablet)
   canvas.addEventListener("touchstart", (e) => {
     e.preventDefault(); // cegah scroll layar
     isDrawing = true;
@@ -598,8 +597,9 @@ document.addEventListener("DOMContentLoaded", function () {
   window.getSignatureData = function () {
     return canvas.toDataURL("image/png");
   };
-  
 });
+</script>
+<script>
 function showCelebration() {
       const modal = document.getElementById('celebration-modal');
       modal.classList.remove('hidden');
