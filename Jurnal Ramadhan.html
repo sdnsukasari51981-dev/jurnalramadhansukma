@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurnal Ramadhan Digital 1447 H - SDN Sukasari 5</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Quicksand:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { height: 100%; }
+    * { font-family: 'Quicksand', sans-serif; }
+    .arabic { font-family: 'Amiri', serif; font-size: 1.35em; line-height: 1.8; }
+    .gradient-ramadhan {
+  background:
+      #1e40af;
+      box-shadow: inset 0 0 100px rgba(0, 187, 255, 0.3), inset 0 0 40px rgba(29, 209, 161, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .gradient-ramadhan::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 15% 30%, rgba(255, 255, 255, 0.15), transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(29, 209, 161, 0.15), transparent 50%),
+        radial-gradient(circle at 50% 90%, rgba(0, 187, 255, 0.1), transparent 40%);
+      pointer-events: none;
+      animation: waveFlow 15s ease-in-out infinite;
+    }
+    @keyframes waveFlow {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(10px, -5px); }
+    }
+    .card-glass {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(25, 118, 210, 0.1);
+    }
+    .star-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5l3.09 9.51h10l-8.09 5.88 3.09 9.51L30 24.02l-8.09 5.88 3.09-9.51-8.09-5.88h10L30 5z' fill='%23ffd700' fill-opacity='0.08'/%3E%3C/svg%3E");
+    }
+    .checkbox-custom:checked {
+      background: linear-gradient(135deg, #1976d2, #0066cc);
+      border-color: #1976d2;
+    }
+    .checkbox-custom {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .checkbox-custom:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(25, 118, 210, 0.5);
+    }
+    .checkbox-label {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .checkbox-label:hover {
+      transform: translateX(5px);
+    }
+    .prayer-item {
+      transition: all 0.3s ease;
+    }
+    .prayer-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+    .prayer-item input:checked ~ span {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+    .signature-pad {
+      background: #fffef7;
+      border: 2px dashed #64b5f6;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+    @keyframes glow {
+      0%, 100% { text-shadow: 0 0 10px rgba(100, 181, 246, 0.5); }
+      50% { text-shadow: 0 0 20px rgba(100, 181, 246, 0.8); }
+    }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .sparkle { animation: sparkle 2s ease-in-out infinite; }
+    .glow-text { animation: glow 3s ease-in-out infinite; }
+    .moon-icon {
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+    @keyframes celebrateIn {
+      0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+      50% { transform: scale(1.2) rotate(10deg); }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .celebrate { animation: celebrateIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+    .doa-box {
+      border-left: 5px solid #1976d2;
+      background: linear-gradient(to right, rgba(25, 118, 210, 0.08), transparent);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td, th {
+      border: 2px solid #64b5f6;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background: linear-gradient(135deg, #0052b3, #0066cc);
+      color: white;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background: linear-gradient(to right, rgba(25, 118, 210, 0.08), transparent);
+    }
+    .header-shadow {
+      box-shadow: 0 8px 32px rgba(0, 102, 204, 0.3);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full overflow-auto">
+  <div id="app" class="min-h-full gradient-ramadhan star-pattern pb-8"><!-- Header -->
+   <header class="text-center py-6 px-4 border-b-4 border-yellow-300 header-shadow relative z-10">
+    <!-- Dekoratif Logo Top -->
+    <div class="flex justify-center items-center gap-2 mb-3 flex-wrap">
+     <img src="tutwurihandayani.png" 
+       alt="Tut Wuri Handayani" 
+       class="w-12 h-12 float-animation" />
+     <img src="sekolahpenggerak.png" 
+       alt="Sekolah Penggerak" 
+       class="w-12 h-12 float-animation" />
+     <img src="disdikkotatangerang.png" 
+       alt="Dinas Pendidikan Kota Tangerang" 
+       class="w-12 h-12 float-animation" />
+     <img src="kotatangerang.png" 
+       alt="Kota Tangerang" 
+       class="w-12 h-12 float-animation" />
+     <img src="sekolahramahanak.png" 
+       alt="Sekolah Ramah Anak" 
+       class="w-12 h-12 float-animation" />
+     <img src="adiwiyata.png" 
+       alt="Adiwiyata" 
+       class="w-12 h-12 float-animation" />
+     <img src="sppi.png" 
+       alt="SPPI" 
+       class="w-12 h-12 float-animation" />
+    </div>
+    <div class="flex justify-center items-center gap-4 mb-4 flex-wrap">
+    <!-- Logo Sekolah -->
+    <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-yellow-300 overflow-hidden">
+    <img 
+    src="sdnsukasari5.jpeg" 
+    alt="Logo SDN Sukasari 5"
+    class="w-full h-full object-contain p-2"
+  >
+</div>
+
+     <div class="flex-1 min-w-max">
+      <h1 id="journal-title" class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg glow-text">Jurnal Ramadhan 1447 H</h1>
+      <h2 id="school-name" class="text-4xl text-blue-100 font-semibold drop-shadow">SDN Sukasari 5</h2>
+      <p class="text-blue-50 text-sm font-medium drop-shadow">Tahun Hijriah 1447</p>
+     </div>
+     <svg class="w-16 h-16 moon-icon float-animation" viewbox="0 0 100 100"><defs>
+       <lineargradient id="moonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ffd700" />
+        <stop offset="100%" style="stop-color:#ffaa00" />
+       </lineargradient>
+      </defs> <path d="M50 10 C70 10 85 30 85 50 C85 70 70 90 50 90 C35 90 22 78 20 62 C35 68 52 60 58 45 C62 35 58 22 50 10" fill="url(#moonGrad)" /> <circle cx="70" cy="25" r="3" fill="#fff" class="sparkle" /> <circle cx="80" cy="40" r="2" fill="#fff" class="sparkle" style="animation-delay: 0.5s" />
+     </svg>
+    </div>
+    <p id="motivation-text" class="text-yellow-200 text-lg italic font-semibold drop-shadow">✨ Semangat Ibadah Ramadhan! ✨</p>
+   </header>
+   <!-- Main Content -->
+   <main class="max-w-5xl mx-auto px-4 space-y-6 pt-6 relative z-10">
+    <!-- Info Siswa Card -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">👤</span> Identitas Siswa</h3>
+     <div class="grid md:grid-cols-2 gap-4">
+      <div><label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label> <input type="text" id="nama-siswa" class="w-full px-4 py-3 rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 transition-all text-base" placeholder="Masukkan nama lengkap...">
+      </div>
+      <div><label class="block text-sm font-semibold text-gray-700 mb-2">Kelas</label> <select id="kelas-siswa" class="w-full px-4 py-3 rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 transition-all text-base"> <option value="">Pilih Kelas...</option> <option value="1A">Kelas 1A</option> <option value="1B">Kelas 1B</option> <option value="2A">Kelas 2A</option> <option value="2B">Kelas 2B</option> <option value="3A">Kelas 3A</option> <option value="3B">Kelas 3B</option> <option value="4A">Kelas 4A</option> <option value="4B">Kelas 4B</option> <option value="5A">Kelas 5A</option> <option value="5B">Kelas 5B</option> <option value="6A">Kelas 6A</option> <option value="6B">Kelas 6B</option> </select>
+      </div>
+     </div>
+     <div class="mt-4"><label class="block text-sm font-semibold text-gray-700 mb-2">Tanggal</label> <input type="date" id="tanggal-ibadah" class="w-full px-4 py-3 rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 transition-all text-base">
+     </div>
+    </section>
+    <!-- Doa-Doa Ramadhan Section -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">���</span> Doa-Doa Ramadhan &amp; Niat Sholat</h3>
+     <div class="space-y-3">
+      <!-- Niat Puasa -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl font-bold text-blue-800 hover:from-blue-200 hover:to-cyan-200 transition-colors flex items-center gap-2 shadow-md"> <span>📿</span> Niat Puasa Ramadhan </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هَٰذِهِ السَّنَةِ لِلَّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Nawaitu shauma ghadin 'an ada'i fardhi syahri ramadhan hadzihi assanati lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Saya niat berpuasa esok hari untuk menunaikan kewajiban bulan Ramadhan tahun ini karena Allah Ta'ala.</p>
+       </div>
+      </details>
+      <!-- Doa Buka Puasa -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-sky-100 to-blue-100 rounded-xl font-bold text-sky-800 hover:from-sky-200 hover:to-blue-200 transition-colors flex items-center gap-2 shadow-md"> <span>🌙</span> Doa Buka Puasa </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">اللَّهُمَّ لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَىٰ رِزْقِكَ أَفْطَرْتُ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِينَ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Allahumma laka sumtu wa bika amantu wa 'ala rizqika afthortu birahmatika ya arhama roohimin</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Ya Allah, untuk-Mu aku berpuasa, kepada-Mu aku beriman, dengan rezeki-Mu aku berbuka, dengan rahmat-Mu wahai Yang Maha Penyayang dari para penyayang.</p>
+       </div>
+      </details>
+      <!-- Niat Sholat Subuh -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-indigo-100 to-blue-100 rounded-xl font-bold text-indigo-800 hover:from-indigo-200 hover:to-blue-200 transition-colors flex items-center gap-2 shadow-md"> <span>🌅</span> Niat Sholat Subuh </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">أُصَلِّي فَرْضَ الصُّبْحِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Ushalli fardhas shubhi rak'ataini mustaqbilal qiblati ada'an lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Saya sholat fardhu Subuh dua rakaat menghadap kiblat untuk Allah Ta'ala.</p>
+       </div>
+      </details>
+      <!-- Niat Sholat Dhuha -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-cyan-100 to-sky-100 rounded-xl font-bold text-cyan-800 hover:from-cyan-200 hover:to-sky-200 transition-colors flex items-center gap-2 shadow-md"> <span>☀️</span> Niat Sholat Dhuha </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">أُصَلِّي سُنَّةَ ال��ُّحَىٰ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ لِلَّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Ushalli sunnatadh dhuha rak'ataini mustaqbilal qiblati lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Saya sholat sunnah Dhuha dua rakaat menghadap kiblat untuk Allah Ta'ala.</p>
+       </div>
+      </details>
+      <!-- Niat Sholat Dzuhur -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl font-bold text-blue-800 hover:from-blue-200 hover:to-indigo-200 transition-colors flex items-center gap-2 shadow-md"> <span>🌞</span> Niat Sholat Dzuhur </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">أُصَلِّي فَرْضَ الظُّهْرِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِل��ّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Ushalli fardhazh zhuhri arba'a raka'atin mustaqbilal qiblati ada'an lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Saya sholat fardhu Dzuhur empat rakaat menghadap kiblat untuk Allah Ta'ala.</p>
+       </div>
+      </details>
+      <!-- Niat Sholat Ashar -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-sky-100 to-cyan-100 rounded-xl font-bold text-sky-800 hover:from-sky-200 hover:to-cyan-200 transition-colors flex items-center gap-2 shadow-md"> <span>🌤️</span> Niat Sholat Ashar </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">أُصَلِّي فَرْضَ الْعَصْ��ِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Ushalli fardhul 'ashri arba'a raka'atin mustaqbilal qiblati ada'an lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Saya sholat fardhu Ashar empat rakaat menghadap kiblat untuk Allah Ta'ala.</p>
+       </div>
+      </details>
+      <!-- Niat Sholat Maghrib -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-blue-200 to-cyan-100 rounded-xl font-bold text-blue-900 hover:from-blue-300 hover:to-cyan-200 transition-colors flex items-center gap-2 shadow-md"> <span>🌅</span> Niat Sholat Maghrib </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">أُصَلِّي فَرْضَ الْمَغْرِبِ ثَل��اثَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Ushalli fardhul maghribi tsalaasa raka'atin mustaqbilal qiblati ada'an lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>🌙 Artinya:</strong> Saya sholat fardhu Maghrib tiga rakaat menghadap kiblat untuk Allah Ta'ala.</p>
+       </div>
+      </details>
+      <!-- Niat Sholat Isya -->
+      <details class="group"><summary class="cursor-pointer px-4 py-3 bg-gradient-to-r from-indigo-100 to-blue-100 rounded-xl font-bold text-indigo-800 hover:from-indigo-200 hover:to-blue-200 transition-colors flex items-center gap-2 shadow-md"> <span>🌙</span> Niat Sholat Isya </summary>
+       <div class="doa-box mt-2">
+        <p class="arabic text-right text-gray-800 mb-2">أُصَلِّي فَر��ضَ الْعِشَاءِ أَرْبَعَ رَكَعَاتٍ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَىٰ</p>
+        <p class="text-gray-700 italic font-medium mb-2">Ushalli fardhul 'isya'i arba'a raka'atin mustaqbilal qiblati ada'an lillahi ta'ala</p>
+        <p class="text-sm text-gray-600"><strong>���� Artinya:</strong> Saya sholat fardhu Isya empat rakaat menghadap kiblat untuk Allah Ta'ala.</p>
+       </div>
+      </details>
+     </div>
+    </section>
+    <!-- Checklist Ibadah -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">✅</span> Checklist Ibadah Harian</h3><!-- Sahur -->
+     <div class="bg-gradient-to-r from-indigo-100 to-blue-100 rounded-xl p-4 mb-4 shadow-md prayer-item"><label class="flex items-center gap-3 cursor-pointer checkbox-label"> <input type="checkbox" id="check-sahur" class="checkbox-custom w-6 h-6 rounded-lg border-2 border-indigo-400 appearance-none checked:border-transparent cursor-pointer transition-all"> <span class="text-lg font-semibold text-indigo-800">🍚 Makan Sahur</span> </label>
+     </div>
+     <!-- Sholat Grid -->
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-3"><label class="flex items-center gap-2 bg-blue-50 p-3 rounded-xl cursor-pointer hover:bg-blue-100 transition-colors border-2 border-blue-300 shadow-sm prayer-item checkbox-label"> <input type="checkbox" id="check-subuh" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-blue-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-blue-900">🌅 Subuh</span> </label> <label class="flex items-center gap-2 bg-cyan-50 p-3 rounded-xl cursor-pointer hover:bg-cyan-100 transition-colors border-2 border-cyan-300 shadow-sm prayer-item checkbox-label"> <input type="checkbox" id="check-duha" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-cyan-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-cyan-900">☀️ Dhuha</span> </label> <label class="flex items-center gap-2 bg-sky-50 p-3 rounded-xl cursor-pointer hover:bg-sky-100 transition-colors border-2 border-sky-300 shadow-sm prayer-item checkbox-label"> <input type="checkbox" id="check-dzuhur" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-sky-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-sky-900">🌞 Dzuhur</span> </label> <label class="flex items-center gap-2 bg-indigo-50 p-3 rounded-xl cursor-pointer hover:bg-indigo-100 transition-colors border-2 border-indigo-300 shadow-sm prayer-item checkbox-label"> <input type="checkbox" id="check-ashar" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-indigo-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-indigo-900">🌤️ Ashar</span> </label> <label class="flex items-center gap-2 bg-blue-50 p-3 rounded-xl cursor-pointer hover:bg-blue-100 transition-colors border-2 border-blue-300 shadow-sm prayer-item checkbox-label"> <input type="checkbox" id="check-maghrib" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-blue-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-blue-900">🌅 Maghrib</span> </label> <label class="flex items-center gap-2 bg-cyan-50 p-3 rounded-xl cursor-pointer hover:bg-cyan-100 transition-colors border-2 border-cyan-300 shadow-sm prayer-item checkbox-label"> <input type="checkbox" id="check-isya" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-cyan-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-cyan-900">🌙 Isya</span> </label> <label class="flex items-center gap-2 bg-sky-50 p-3 rounded-xl cursor-pointer hover:bg-sky-100 transition-colors border-2 border-sky-300 shadow-sm prayer-item checkbox-label col-span-2"> <input type="checkbox" id="check-tarawih" class="checkbox-custom w-5 h-5 rounded-lg border-2 border-sky-400 appearance-none checked:border-transparent cursor-pointer"> <span class="font-semibold text-sky-900">🕌 Tarawih</span> </label>
+     </div>
+    </section>
+    <!-- Tabel Ringkasan Ibadah -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl overflow-x-auto">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">📊</span> Ringkasan Ibadah Harian</h3>
+     <table>
+      <thead>
+       <tr>
+        <th>Waktu Sholat</th>
+        <th>Deskripsi</th>
+        <th>Terpenuhi</th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td class="font-bold">Subuh</td>
+        <td class="text-left text-sm">2 rakaat Fardhu</td>
+        <td><input type="checkbox" id="table-subuh" class="w-5 h-5 cursor-pointer"></td>
+       </tr>
+       <tr>
+        <td class="font-bold">Dhuha</td>
+        <td class="text-left text-sm">2 rakaat Sunnah</td>
+        <td><input type="checkbox" id="check-duha" class="w-5 h-5 cursor-pointer"></td>
+       </tr>
+       <tr>
+        <td class="font-bold">Dzuhur</td>
+        <td class="text-left text-sm">4 rakaat Fardhu</td>
+        <td><input type="checkbox" id="table-dzuhur" class="w-5 h-5 cursor-pointer"></td>
+       </tr>
+       <tr>
+        <td class="font-bold">Ashar</td>
+        <td class="text-left text-sm">4 rakaat Fardhu</td>
+        <td><input type="checkbox" id="table-ashar" class="w-5 h-5 cursor-pointer"></td>
+       </tr>
+       <tr>
+        <td class="font-bold">Maghrib</td>
+        <td class="text-left text-sm">3 rakaat Fardhu</td>
+        <td><input type="checkbox" id="table-magrib" class="w-5 h-5 cursor-pointer"></td>
+       </tr>
+       <tr>
+        <td class="font-bold">Isya</td>
+        <td class="text-left text-sm">4 rakaat Fardhu</td>
+        <td><input type="checkbox" id="table-isya" class="w-5 h-5 cursor-pointer"></td>
+       </tr>
+      </tbody>
+     </table>
+    </section>
+    <!-- Tadarus Section -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">📖</span> Tadarus Juz 30</h3><label class="block text-sm font-semibold text-gray-700 mb-2">Surat yang Dibaca Hari Ini</label> <select id="tadarus-surat" class="w-full px-4 py-3 rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 transition-all text-base"> <option value="">Pilih Surat...</option> <option value="An-Naba">78. An-Naba (Berita Besar)</option> <option value="An-Nazi'at">79. An-Nazi'at (Malaikat Pencabut Nyawa)</option> <option value="Abasa">80. 'Abasa (Bermuka Masam)</option> <option value="At-Takwir">81. At-Takwir (Penggulungan)</option> <option value="Al-Infitar">82. Al-Infitar (Terbelah)</option> <option value="Al-Mutaffifin">83. Al-Mutaffifin (Orang Curang)</option> <option value="Al-Insyiqaq">84. Al-Insyiqaq (Terbelah)</option> <option value="Al-Buruj">85. Al-Buruj (Gugusan Bintang)</option> <option value="At-Tariq">86. At-Tariq (Bintang Malam)</option> <option value="Al-A'la">87. Al-A'la (Yang Maha Tinggi)</option> <option value="Al-Ghasyiyah">88. Al-Ghasyiyah (Hari Pembalasan)</option> <option value="Al-Fajr">89. Al-Fajr (Fajar)</option> <option value="Al-Balad">90. Al-Balad (Negeri)</option> <option value="Asy-Syams">91. Asy-Syams (Matahari)</option> <option value="Al-Lail">92. Al-Lail (Malam)</option> <option value="Ad-Duha">93. Ad-Duha (Waktu Duha)</option> <option value="Asy-Syarh">94. Asy-Syarh (Kelapangan)</option> <option value="At-Tin">95. At-Tin (Buah Tin)</option> <option value="Al-Alaq">96. Al-'Alaq (Segumpal Darah)</option> <option value="Al-Qadr">97. Al-Qadr (Kemuliaan)</option> <option value="Al-Bayyinah">98. Al-Bayyinah (Bukti Nyata)</option> <option value="Az-Zalzalah">99. Az-Zalzalah (Guncangan)</option> <option value="Al-Adiyat">100. Al-'Adiyat (Kuda Perang)</option> <option value="Al-Qari'ah">101. Al-Qari'ah (Hari Kiamat)</option> <option value="At-Takasur">102. At-Takasur (Bermegah-megahan)</option> <option value="Al-Asr">103. Al-'Asr (Masa)</option> <option value="Al-Humazah">104. Al-Humazah (Pengumpat)</option> <option value="Al-Fil">105. Al-Fil (Gajah)</option> <option value="Quraisy">106. Quraisy (Suku Quraisy)</option> <option value="Al-Ma'un">107. Al-Ma'un (Barang Berguna)</option> <option value="Al-Kausar">108. Al-Kausar (Nikmat Berlimpah)</option> <option value="Al-Kafirun">109. Al-Kafirun (Orang Kafir)</option> <option value="An-Nasr">110. An-Nasr (Pertolongan)</option> <option value="Al-Lahab">111. Al-Lahab (Api)</option> <option value="Al-Ikhlas">112. Al-Ikhlas (Ikhlas)</option> <option value="Al-Falaq">113. Al-Falaq (Subuh)</option> <option value="An-Nas">114. An-Nas (Manusia)</option> </select>
+    </section>
+    <!-- Catatan Harian -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">📝</span> Catatan Hari Ini</h3>
+     <p class="text-gray-600 mb-3 text-sm font-medium">💭 Tuliskan Pengalaman Baik atau Refleksi Hari Ini</p><textarea id="catatan-harian" rows="5" class="w-full px-4 py-3 rounded-xl border-2 border-blue-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 transition-all text-base resize-none" placeholder="Bagaimana ibadahmu hari ini? Apa yang kamu pelajari?"></textarea>
+    </section>
+    <!-- Tanda Tangan Orang Tua -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">✍️</span> Tanda Tangan Orang Tua/Wali</h3>
+     <p class="text-gray-600 mb-3 text-sm font-medium">Orang tua/wali menandatangani sebagai bukti mengetahui dan mendukung ibadah anak</p>
+     <div class="signature-pad rounded-xl p-4 relative">
+      <canvas id="signature-canvas" class="w-full h-32 rounded-lg bg-white cursor-crosshair border-2 border-gray-300"></canvas><button onclick="clearSignature()" class="absolute top-3 right-3 bg-red-100 hover:bg-red-200 text-red-600 px-3 py-1 rounded-lg text-sm font-semibold transition-colors"> 🗑️ Hapus </button>
+     </div>
+    </section>
+    <!-- Catatan Penting -->
+    <section class="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-2xl p-6 shadow-xl border-4 border-blue-400">
+     <h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2"><span class="text-2xl">⚠️</span> Catatan Penting</h3>
+     <p class="text-blue-900 font-semibold leading-relaxed">📝 Pengisian jurnal ini dilakukan dengan <strong>PENUH TANGGUNG JAWAB</strong> dan <strong>JUJUR</strong>. <br><br>
+       Ingatlah bahwa <strong>Allah SWT Maha Mengetahui</strong> segala perbuatan, niat, dan hati kita. <br>
+       Kejujuran adalah bagian penting dari iman. Jangan pernah berbohong dalam pengisian jurnal ini. <br><strong>✨ Semoga amal ibadahmu diterima oleh Allah SWT ✨</strong></p>
+    </section>
+    <!-- Submit Button -->
+    <div class="text-center mt-6"><button id="btn-simpan" onclick="simpanJurnal()" class="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-bold py-4 px-12 rounded-2xl text-lg shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"> 💾 Simpan Jurnal Hari Ini </button>
+     <p id="save-status" class="mt-3 text-white font-semibold text-base"></p>
+    </div>
+    <!-- Menu Download Excel -->
+<div class="text-center mb-10">
+  <button onclick="downloadExcelRiwayat()" 
+    class="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 
+           text-white font-bold py-3 px-8 rounded-2xl shadow-lg transform hover:scale-105 transition-all">
+    📥 Download Excel Riwayat Jurnal
+  </button>
+</div>
+    <!-- Riwayat Jurnal -->
+    <section class="card-glass rounded-2xl p-6 shadow-xl mb-8">
+     <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> Riwayat Jurnal Tersimpan</h3>
+     <div id="riwayat-container" class="space-y-3 max-h-96 overflow-y-auto">
+      <p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal tersimpan</p>
+     </div>
+    </section>
+    <!-- Celebration Modal -->
+    <div id="celebration-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden items-center justify-center z-50 p-4">
+     <div class="bg-white rounded-3xl p-8 max-w-md text-center celebrate shadow-2xl">
+      <div class="text-7xl mb-4">
+       🎉
+      </div>
+      <h2 class="text-3xl font-bold text-blue-600 mb-2">الحمد لله</h2>
+      <p class="text-blue-600 text-xl font-semibold mb-2">Alhamdulillah!</p>
+      <p class="text-gray-700 text-lg mb-4 font-medium">Jurnal ibadah hari ini berhasil disimpan!</p>
+      <div class="text-5xl mb-4 flex justify-center gap-2"><span class="animate-bounce" style="animation-delay: 0s;">⭐</span> <span class="animate-bounce" style="animation-delay: 0.2s;">✨</span> <span class="animate-bounce" style="animation-delay: 0.4s;">🌙</span> <span class="animate-bounce" style="animation-delay: 0.2s;">✨</span> <span class="animate-bounce" style="animation-delay: 0s;">⭐</span>
+      </div>
+      <p class="text-blue-700 font-semibold mb-6 text-base">Semoga Allah SWT menerima semua amal ibadah kita. Aamiin Ya Robbal Alamin!</p><button onclick="closeCelebration()" class="bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold py-3 px-8 rounded-xl hover:shadow-lg transition-all"> Terima Kasih 🤲 </button>
+     </div>
+    </div>
+   </main>
+   <!-- Footer -->
+   <footer class="text-center py-6 text-white border-t-4 border-yellow-300 mt-8 relative z-10">
+    <p class="font-bold text-lg drop-shadow">🌙 Jurnal Ramadhan 1447 Hijriah © 2026 🌙</p>
+    <p class="text-blue-100 font-semibold drop-shadow">SDN Sukasari 5 - Semoga Ramadhan Kita Berkah</p>
+    <p class="text-blue-50 text-sm mt-2 drop-shadow">Diisi dengan jujur dan penuh tanggung jawab ✨</p>
+   </footer>
+  </div>
+  <script>
+    const STORAGE_KEY = "riwayatJurnalRamadhan";
+    const defaultConfig = {
+      school_name: 'SDN Sukasari 5',
+      journal_title: 'Jurnal Ramadhan 1447 H',
+      motivation_text: '✨ Semangat Ibadah Ramadhan! ✨'
+    };
+
+    let currentData = [];
+    let signatureData = '';
+    let canvas, ctx, isDrawing = false;
+
+    function setupSignature() {
+      canvas = document.getElementById('signature-canvas');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
+      
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width - 32;
+      canvas.height = 128;
+      
+      ctx.strokeStyle = '#1565c0';
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      canvas.addEventListener('mousedown', startDrawing);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', stopDrawing);
+      canvas.addEventListener('mouseout', stopDrawing);
+      
+      canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
+      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+      canvas.addEventListener('touchend', stopDrawing);
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function startDrawing(e) {
+      isDrawing = true;
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function stopDrawing() {
+      if (isDrawing) {
+        isDrawing = false;
+        signatureData = canvas.toDataURL();
+      }
+    }
+
+    function clearSignature() {
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        signatureData = '';
+      }
+    }
+
+    function showCelebration() {
+      const modal = document.getElementById('celebration-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCelebration() {
+      const modal = document.getElementById('celebration-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function updateTableCheckboxes() {
+      document.getElementById('table-subuh').checked = document.getElementById('check-subuh').checked;
+      document.getElementById('table-duha').checked = document.getElementById('check-duha').checked;
+      document.getElementById('table-dzuhur').checked = document.getElementById('check-dzuhur').checked;
+      document.getElementById('table-ashar').checked = document.getElementById('check-ashar').checked;
+      document.getElementById('table-maghrib').checked = document.getElementById('check-maghrib').checked;
+      document.getElementById('table-isya').checked = document.getElementById('check-isya').checked;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('check-subuh').addEventListener('change', updateTableCheckboxes);
+      document.getElementById('check-duha').addEventListener('change', updateTableCheckboxes);
+      document.getElementById('check-dzuhur').addEventListener('change', updateTableCheckboxes);
+      document.getElementById('check-ashar').addEventListener('change', updateTableCheckboxes);
+      document.getElementById('check-maghrib').addEventListener('change', updateTableCheckboxes);
+      document.getElementById('check-isya').addEventListener('change', updateTableCheckboxes);
+    });
+
+    async function simpanJurnal() {
+      const nama = document.getElementById('nama-siswa').value.trim();
+      const kelas = document.getElementById('kelas-siswa').value;
+      const tanggal = document.getElementById('tanggal-ibadah').value;
+
+      if (!nama || !kelas || !tanggal) {
+        document.getElementById('save-status').textContent = '⚠️ Mohon lengkapi nama, kelas, dan tanggal!';
+        return;
+      }
+
+      const btn = document.getElementById('btn-simpan');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Menyimpan...';
+
+      if (currentData.length >= 999) {
+        document.getElementById('save-status').textContent = '⚠️ Batas penyimpanan tercapai (999 data).';
+        btn.disabled = false;
+        btn.innerHTML = '💾 Simpan Jurnal Hari Ini';
+        return;
+      }
+
+      const journalData = {
+        date: tanggal,
+        nama_siswa: nama,
+        kelas: kelas,
+        sahur: document.getElementById('check-sahur').checked,
+        subuh: document.getElementById('check-subuh').checked,
+        duha: document.getElementById('check-duha').checked,
+        dzuhur: document.getElementById('check-dzuhur').checked,
+        ashar: document.getElementById('check-ashar').checked,
+        maghrib: document.getElementById('check-maghrib').checked,
+        isya: document.getElementById('check-isya').checked,
+        tarawih: document.getElementById('check-tarawih').checked,
+        tadarus_surat: document.getElementById('tadarus-surat').value,
+        catatan_harian: document.getElementById('catatan-harian').value,
+        tanda_tangan: signatureData,
+        created_at: new Date().toISOString()
+      };
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.create(journalData);
+        if (result.isOk) {
+          showCelebration();
+          resetForm();
+          document.getElementById('save-status').textContent = '✅ Jurnal berhasil disimpan!';
+        } else {
+          document.getElementById('save-status').textContent = '❌ Gagal menyimpan. Coba lagi!';
+        }
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '💾 Simpan Jurnal Hari Ini';
+    }
+
+    function resetForm() {
+      document.getElementById('check-sahur').checked = false;
+      document.getElementById('check-subuh').checked = false;
+      document.getElementById('check-duha').checked = false;
+      document.getElementById('check-dzuhur').checked = false;
+      document.getElementById('check-ashar').checked = false;
+      document.getElementById('check-maghrib').checked = false;
+      document.getElementById('check-isya').checked = false;
+      document.getElementById('check-tarawih').checked = false;
+      document.getElementById('tadarus-surat').value = '';
+      document.getElementById('catatan-harian').value = '';
+      clearSignature();
+      updateTableCheckboxes();
+    }
+
+    async function deleteEntry(backendId) {
+      const entry = currentData.find(d => d.__backendId === backendId);
+      if (!entry) return;
+
+      const btn = document.querySelector(`[data-delete-id="${backendId}"]`);
+      if (btn.dataset.confirming === 'true') {
+        btn.disabled = true;
+        btn.textContent = '⏳';
+        
+        if (window.dataSdk) {
+          const result = await window.dataSdk.delete(entry);
+          if (!result.isOk) {
+            btn.disabled = false;
+            btn.textContent = '🗑️';
+          }
+        }
+      } else {
+        btn.dataset.confirming = 'true';
+        btn.textContent = '✓ Yakin?';
+        btn.classList.add('bg-red-500', 'text-white');
+        
+        setTimeout(() => {
+          if (btn.dataset.confirming === 'true') {
+            btn.dataset.confirming = 'false';
+            btn.textContent = '🗑️';
+            btn.classList.remove('bg-red-500', 'text-white');
+          }
+        }, 3000);
+      }
+    }
+
+    function renderRiwayat(data) {
+      const container = document.getElementById('riwayat-container');
+      
+      if (!data || data.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal tersimpan</p>';
+        return;
+      }
+
+      const sortedData = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      container.innerHTML = sortedData.map(entry => {
+        const prayers = [];
+        if (entry.sahur) prayers.push('🍚');
+        if (entry.subuh) prayers.push('🌅');
+        if (entry.duha) prayers.push('☀️');
+        if (entry.dzuhur) prayers.push('🌞');
+        if (entry.ashar) prayers.push('🌤️');
+        if (entry.maghrib) prayers.push('🌅');
+        if (entry.isya) prayers.push('🌙');
+        if (entry.tarawih) prayers.push('🕌');
+
+        const dateObj = new Date(entry.date);
+        const formattedDate = dateObj.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        return `
+          <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 border-2 border-blue-300 shadow-md">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <p class="font-bold text-blue-900 text-base">${entry.nama_siswa} - Kelas ${entry.kelas}</p>
+                <p class="text-sm text-gray-600 font-medium">${formattedDate}</p>
+              </div>
+              <button data-delete-id="${entry.__backendId}" onclick="deleteEntry('${entry.__backendId}')" class="px-3 py-1 rounded-lg bg-gray-100 hover:bg-red-100 text-gray-600 hover:text-red-600 transition-colors text-sm font-semibold">
+                🗑️
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-1 mb-2">
+              ${prayers.map(p => `<span class="text-xl">${p}</span>`).join('')}
+              ${prayers.length === 0 ? '<span class="text-gray-400 text-sm font-medium">Belum ada ibadah tercatat</span>' : ''}
+            </div>
+            ${entry.tadarus_surat ? `<p class="text-sm text-blue-700 font-medium">📖 Tadarus: <strong>${entry.tadarus_surat}</strong></p>` : ''}
+            ${entry.catatan_harian ? `<p class="text-sm text-blue-700 mt-1">📝 Catatan: ${entry.catatan_harian.substring(0, 50)}...</p>` : ''}
+            ${entry.tanda_tangan ? '<p class="text-sm text-green-600 mt-1 font-semibold">✅ Ditandatangani orang tua</p>' : '<p class="text-sm text-red-600 mt-1">❌ Belum ditandatangani</p>'}
+          </div>
+        `;
+      }).join('');
+    }
+
+    const dataHandler = {
+      onDataChanged(data) {
+        currentData = data;
+        renderRiwayat(data);
+      }
+    };
+
+    async function onConfigChange(config) {
+      document.getElementById('school-name').textContent = config.school_name || defaultConfig.school_name;
+      document.getElementById('journal-title').textContent = config.journal_title || defaultConfig.journal_title;
+      document.getElementById('motivation-text').textContent = config.motivation_text || defaultConfig.motivation_text;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['school_name', config.school_name || defaultConfig.school_name],
+        ['journal_title', config.journal_title || defaultConfig.journal_title],
+        ['motivation_text', config.motivation_text || defaultConfig.motivation_text]
+      ]);
+    }
+
+    async function init() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('tanggal-ibadah').value = today;
+
+      setupSignature();
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      }
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cff13819056aa09',t:'MTc3MTQzMzk3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+ </script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+  
+
+  function getRiwayat() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  }
+
+  function setRiwayat(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function simpanJurnal() {
+    const nama = document.getElementById('nama-siswa').value.trim();
+    const kelas = document.getElementById('kelas-siswa').value;
+    const tanggal = document.getElementById('tanggal-ibadah').value;
+
+    if (!nama || !kelas || !tanggal) {
+      document.getElementById('save-status').textContent = '⚠️ Mohon lengkapi nama, kelas, dan tanggal!';
+      return;
+    }
+
+    const journalData = {
+      Tanggal: tanggal,
+      Nama: nama,
+      Kelas: kelas,
+      Sahur: document.getElementById('check-sahur').checked ? 'Ya' : 'Tidak',
+      Subuh: document.getElementById('check-subuh').checked ? 'Ya' : 'Tidak',
+      Dhuha: document.getElementById('check-duha').checked ? 'Ya' : 'Tidak',
+      Dzuhur: document.getElementById('check-dzuhur').checked ? 'Ya' : 'Tidak',
+      Ashar: document.getElementById('check-ashar').checked ? 'Ya' : 'Tidak',
+      Maghrib: document.getElementById('check-maghrib').checked ? 'Ya' : 'Tidak',
+      Isya: document.getElementById('check-isya').checked ? 'Ya' : 'Tidak',
+      Tarawih: document.getElementById('check-tarawih').checked ? 'Ya' : 'Tidak',
+      Tadarus: document.getElementById('tadarus-surat').value || '-',
+      Catatan: document.getElementById('catatan-harian').value || '-'
+    };
+
+    const riwayat = getRiwayat();
+
+    // Cegah dobel tanggal + nama + kelas
+    const isExist = riwayat.some(r => 
+      r.Tanggal === journalData.Tanggal &&
+      r.Nama === journalData.Nama &&
+      r.Kelas === journalData.Kelas
+    );
+
+    if (isExist) {
+      document.getElementById('save-status').textContent = '⚠️ Jurnal untuk tanggal ini sudah ada.';
+      return;
+    }
+
+    riwayat.push(journalData);
+    setRiwayat(riwayat);
+
+    tampilkanRiwayat();
+    document.getElementById('save-status').textContent = '✅ Jurnal berhasil disimpan!';
+
+    showCelebration();
+
+    document.getElementById('save-status').textContent = '✅ Jurnal berhasil disimpan & file Excel bisa diunduh!';
+  }
+
+  function tampilkanRiwayat() {
+    const container = document.getElementById('riwayat-container');
+    const riwayat = getRiwayat();
+
+    if (riwayat.length === 0) {
+      container.innerHTML = `<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal tersimpan</p>`;
+      return;
+    }
+
+    container.innerHTML = riwayat.map((item, i) => `
+      <div class="p-4 rounded-xl bg-white shadow border-l-4 border-blue-500">
+        <p class="font-bold text-blue-700">📅 ${item.Tanggal}</p>
+        <p class="text-sm text-gray-700">
+          👤 ${item.Nama} (${item.Kelas})<br>
+          🕌 Subuh: ${item.Subuh}, Dzuhur: ${item.Dzuhur}, Ashar: ${item.Ashar}, Maghrib: ${item.Maghrib}, Isya: ${item.Isya}<br>
+          📖 Tadarus: ${item.Tadarus}
+        </p>
+      </div>
+    `).join('');
+  }
+
+  function downloadExcel(data) {
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Jurnal Ramadhan");
+
+    XLSX.writeFile(wb, "Jurnal_Ramadhan_SDN_Sukasari_5.xlsx");
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    tampilkanRiwayat();
+  });
+</script>
+<script>
+  function downloadExcelRiwayat() {
+    const data = JSON.parse(localStorage.getItem("riwayatJurnalRamadhan")) || [];
+
+    if (data.length === 0) {
+      alert("⚠️ Belum ada data jurnal untuk diunduh.");
+      return;
+    }
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Jurnal Ramadhan");
+
+    XLSX.writeFile(wb, "Jurnal_Ramadhan_SDN_Sukasari_5.xlsx");
+  }
+</script>
+
+</body>
+</html>
