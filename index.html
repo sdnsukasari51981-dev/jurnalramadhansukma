@@ -361,6 +361,7 @@
     📥 Download Excel Riwayat Jurnal
   </button>
 </div>
+
     <!-- Riwayat Jurnal -->
     <section class="card-glass rounded-2xl p-6 shadow-xl mb-8">
      <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> Riwayat Jurnal Tersimpan</h3>
@@ -711,14 +712,18 @@
   }
 
   function simpanJurnal() {
-    const nama = document.getElementById('nama-siswa').value.trim();
-    const kelas = document.getElementById('kelas-siswa').value;
-    const tanggal = document.getElementById('tanggal-ibadah').value;
+  const data = {
+    nama: document.getElementById("nama").value,
+    kelas: document.getElementById("kelas").value,
+    tanggal: document.getElementById("tanggal").value,
+    ibadah: [...document.querySelectorAll('input[name="ibadah"]:checked')].map(el => el.value),
+    tadarus: document.getElementById("tadarus").value,
+    catatan: document.getElementById("catatan").value,
+    timestamp: Date.now()
+  };
 
-    if (!nama || !kelas || !tanggal) {
-      document.getElementById('save-status').textContent = '⚠️ Mohon lengkapi nama, kelas, dan tanggal!';
-      return;
-    }
+  database.ref("jurnal").push(data);
+  alert("Jurnal berhasil disimpan!");
 
     const journalData = {
       Tanggal: tanggal,
@@ -762,13 +767,32 @@
   }
 
   function tampilkanRiwayat() {
-    const container = document.getElementById('riwayat-container');
-    const riwayat = getRiwayat();
+  const container = document.getElementById("riwayat-container");
 
-    if (riwayat.length === 0) {
-      container.innerHTML = `<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal tersimpan</p>`;
+  database.ref("jurnal").on("value", (snapshot) => {
+    const data = snapshot.val();
+    container.innerHTML = "";
+
+    if (!data) {
+      container.innerHTML = `<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal</p>`;
       return;
     }
+
+    Object.values(data).reverse().forEach((item, i) => {
+      container.innerHTML += `
+        <div class="p-4 rounded-xl border border-blue-200 bg-blue-50">
+          <div class="font-bold text-blue-800">${item.nama} (${item.kelas})</div>
+          <div class="text-sm text-gray-600">📅 ${item.tanggal}</div>
+          <div class="text-sm">✅ ${item.ibadah?.join(", ") || "-"}</div>
+          <div class="text-sm">📖 Tadarus: ${item.tadarus || "-"}</div>
+          <div class="text-sm">📝 Catatan: ${item.catatan || "-"}</div>
+        </div>
+      `;
+    });
+  });
+
+tampilkanRiwayat();
+
 
     container.innerHTML = riwayat.map((item, i) => `
       <div class="p-4 rounded-xl bg-white shadow border-l-4 border-blue-500">
@@ -810,6 +834,25 @@
     XLSX.writeFile(wb, "Jurnal_Ramadhan_SDN_Sukasari_5.xlsx");
   }
 </script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyAeCJafJYijKKG2My__FoBiSWjMwhtA-hs",
+  authDomain: "jurnal-ramadhan-1447-h-sukma.firebaseapp.com",
+  databaseURL: "https://jurnal-ramadhan-1447-h-sukma-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "jurnal-ramadhan-1447-h-sukma",
+  storageBucket: "jurnal-ramadhan-1447-h-sukma.firebasestorage.app",
+  messagingSenderId: "576108268955",
+  appId: "1:576108268955:web:abd16a8a799dac56e4653e",
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+</script>
+
 
 </body>
 </html>
