@@ -414,11 +414,18 @@
   }
 
   function simpanJurnal() {
-    const nama = document.getElementById('nama-siswa')?.value?.trim();
-    const kelas = document.getElementById('kelas-siswa')?.value;
-    const tanggal = document.getElementById('tanggal-ibadah')?.value;
-    const catatan = document.getElementById('catatan-harian').value.trim(); // ⬅️ ambil catatan
-    const tandaTangan = window.getSignatureData ? getSignatureData() : "";
+  const data = {
+    nama: document.getElementById("nama").value,
+    kelas: document.getElementById("kelas").value,
+    tanggal: document.getElementById("tanggal").value,
+    ibadah: [...document.querySelectorAll('input[name="ibadah"]:checked')].map(el => el.value),
+    tadarus: document.getElementById("tadarus").value,
+    catatan: document.getElementById("catatan").value,
+    tandaTangan: getSignatureData(), // ⬅️ TANDA TANGAN ORANG TUA
+    timestamp: Date.now()
+  };
+  database.ref("jurnal").push(data);
+  alert("Jurnal berhasil disimpan!");
 
     if (!nama || !kelas || !tanggal) {
       document.getElementById('save-status').textContent = '⚠️ Mohon lengkapi Nama, Kelas, dan Tanggal!';
@@ -441,6 +448,35 @@
   Catatan: document.getElementById('catatan-harian')?.value || '-',
   Signature: getSignatureData(),   // ⬅️ INI PENTING
   WaktuSimpan: new Date().toISOString()}
+
+  function tampilkanRiwayat() {
+  const container = document.getElementById("riwayat-container");
+
+  database.ref("jurnal").on("value", (snapshot) => {
+    const data = snapshot.val();
+    container.innerHTML = "";
+
+    if (!data) {
+      container.innerHTML = `<p class="text-gray-500 text-center py-8">📄 Belum ada data jurnal</p>`;
+      return;
+    }
+
+    Object.values(data).reverse().forEach((item, i) => {
+      container.innerHTML += `
+        <div class="p-4 rounded-xl border border-blue-200 bg-blue-50">
+          <div class="font-bold text-blue-800">${item.nama} (${item.kelas})</div>
+          <div class="text-sm text-gray-600">📅 ${item.tanggal}</div>
+          <div class="text-sm">✅ ${item.ibadah?.join(", ") || "-"}</div>
+          <div class="text-sm">📖 Tadarus: ${item.tadarus || "-"}</div>
+          <div class="text-sm">📝 Catatan: ${item.catatan || "-"}</div>
+        </div>
+      `;
+    });
+  });
+}
+
+tampilkanRiwayat();
+
 
     const riwayat = getRiwayat();
 
@@ -608,6 +644,25 @@ function showCelebration() {
       modal.classList.add('hidden');
       modal.classList.remove('flex');
     }    
+</script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js"></script>
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyAeCJafJYijKKG2My__FoBiSWjMwhtA-hs",
+  authDomain: "jurnal-ramadhan-1447-h-sukma.firebaseapp.com",
+  databaseURL: "https://jurnal-ramadhan-1447-h-sukma-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "jurnal-ramadhan-1447-h-sukma",
+  storageBucket: "jurnal-ramadhan-1447-h-sukma.firebasestorage.app",
+  messagingSenderId: "576108268955",
+  appId: "1:576108268955:web:abd16a8a799dac56e4653e",
+  measurementId: "G-C95F9QGHRT"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
 </script>
 
 
