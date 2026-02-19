@@ -567,6 +567,27 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.beginPath();
   });
 
+  canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault(); // cegah scroll layar
+    isDrawing = true;
+    const p = getPosFromTouch(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+  }, { passive: false });
+
+  canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+    if (!isDrawing) return;
+    const p = getPosFromTouch(e);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  }, { passive: false });
+
+  canvas.addEventListener("touchend", () => {
+    isDrawing = false;
+    ctx.beginPath();
+  });
+
   window.clearSignature = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
