@@ -132,7 +132,7 @@
     .header-shadow {
       box-shadow: 0 8px 32px rgba(0, 102, 204, 0.3);
     }
-    #signature-canvas {
+    #signature-pad {
     touch-action: none; /* penting agar tidak ke-scroll saat tanda tangan */
   }
   </style>
@@ -516,7 +516,7 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const canvas = document.getElementById("signature-canvas");
+  const canvas = document.getElementById("signature-pad");
   const ctx = canvas.getContext("2d");
 
   let isDrawing = false;
