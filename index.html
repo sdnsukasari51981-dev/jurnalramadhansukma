@@ -570,24 +570,26 @@ document.addEventListener("DOMContentLoaded", function () {
     ctx.beginPath();
   });
 
-  // Touch events (HP/Tablet)
-  canvas.addEventListener("touchstart", (e) => {
-    e.preventDefault(); // cegah scroll layar
+  // Touch start
+  canvas.addEventListener("touchstart", function (e) {
+    e.preventDefault();               // ⛔ cegah scroll
     isDrawing = true;
-    const p = getPosFromTouch(e);
+    const pos = getTouchPos(e);
     ctx.beginPath();
-    ctx.moveTo(p.x, p.y);
+    ctx.moveTo(pos.x, pos.y);
   }, { passive: false });
 
-  canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
+  // Touch move
+  canvas.addEventListener("touchmove", function (e) {
+    e.preventDefault();               // ⛔ cegah scroll
     if (!isDrawing) return;
-    const p = getPosFromTouch(e);
-    ctx.lineTo(p.x, p.y);
+    const pos = getTouchPos(e);
+    ctx.lineTo(pos.x, pos.y);
     ctx.stroke();
   }, { passive: false });
 
-  canvas.addEventListener("touchend", () => {
+  // Touch end
+  canvas.addEventListener("touchend", function () {
     isDrawing = false;
     ctx.beginPath();
   });
